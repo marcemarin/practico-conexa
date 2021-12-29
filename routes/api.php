@@ -19,6 +19,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/earth', [EarthController::class, 'index']);
+Route::get('/earth', [EarthController::class, 'earth']);
 
-Route::post('/earth', [EarthController::class, 'store']);
+Route::post('/final-position', [EarthController::class, 'finalPosition']);
