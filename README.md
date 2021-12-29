@@ -44,10 +44,10 @@ Start the server
   GET /api/earth
 ```
 
-#### Get item
+#### Final position 
 
 ```http
-  POST /api/earth
+  POST /api/final-position
 ```
 
 | Parameter | Type     | Description                       |
