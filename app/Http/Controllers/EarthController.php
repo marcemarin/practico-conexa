@@ -41,11 +41,7 @@ class EarthController extends Controller
 
         $items = $validated['items'];
 
-        dump("Initial -> " . $initial[0] . ":" . $initial[1]);        
-
-        if ($initial[0] < 0 || $initial[0] > 2 || $initial[1] < 0 || $initial[1] > 2) {
-            return $this->returnError("Invalid params", 406);
-        }
+        dump("Initial -> " . $initial[0] . ":" . $initial[1]);              
 
         $movements = [];
 
