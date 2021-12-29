@@ -36,6 +36,27 @@ Start the server
 ```
 
 
+## API Reference
+
+#### Get movements
+
+```http
+  GET /api/earth
+```
+
+#### Get item
+
+```http
+  POST /api/earth
+```
+
+| Parameter | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `initial`      | `array` | **Required**. Initial coordinates |
+| `items`      | `array` | **Required**. Items obtained in get movements |
+
+
+
 ## Authors
 
 - [@marcemarin](https://github.com/marcemarin)
