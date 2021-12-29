@@ -12,7 +12,7 @@ class EarthController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function earth()
     {
         $movements = $this->getMovements();
 
@@ -33,7 +33,7 @@ class EarthController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function finalPosition(Request $request)
     {
         $validated = $this->validateData($request);
 
