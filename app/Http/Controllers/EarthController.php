@@ -35,15 +35,19 @@ class EarthController extends Controller
      */
     public function finalPosition(Request $request)
     {
+        /* $movements[0] = ["type" => "Initial", "movement" => [0, 0]];
+
+        return $movements; */
+        
         $validated = $this->validateData($request);
 
         $initial = $validated['initial'];
 
         $items = $validated['items'];
 
-        dump("Initial -> " . $initial[0] . ":" . $initial[1]);              
+        //dump("Initial -> " . $initial[0] . ":" . $initial[1]);
 
-        $movements = [];
+        $movements[0] = ["type" => "Initial", "movement" => [$initial[0], $initial[1]]];
 
         foreach ($items as $item) {
 
@@ -80,11 +84,13 @@ class EarthController extends Controller
             }
         }
 
-        foreach ($movements as $movement) {
+        /* foreach ($movements as $movement) {
             dump($movement['type'] . " -> " . $movement['movement'][0] . ":" . $movement['movement'][1]);
-        }
+        } */
 
-        //return $this->returnSuccess();
+        //return ($movements);
+
+        return $this->returnSuccess($movements);
     }
 
     private function validateData(Request $request)
