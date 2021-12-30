@@ -34,15 +34,12 @@
 </template>
 
 <script>
-import { onMounted } from "vue";
 import useMovements from "../../composables/movements";
 
 export default {
   setup() {
     const { movements, getMovements, coordinates, getCoordinates } =
       useMovements();
-
-    //onMounted(getMovements);
 
     const getMovementsFromEarth = async () => {
       await getMovements();

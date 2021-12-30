@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\EarthRequest;
+use App\Services\EarthService;
 use Illuminate\Http\Request;
-use Illuminate\Validation\Rule;
 
 class EarthController extends Controller
 {
@@ -12,9 +13,17 @@ class EarthController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    protected $initial;
+
+    public function __construct(Request $request)
+    {
+        $this->initial = $request->initial;
+    }
+
     public function earth()
     {
-        $movements = $this->getMovements();
+        $movements = EarthService::getMovements();
 
         $randomMovements = [];
 
@@ -27,124 +36,24 @@ class EarthController extends Controller
         return $randomMovements;
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function finalPosition(Request $request)
+    public function finalPosition(EarthRequest $request)
     {
-        /* $movements[0] = ["type" => "Initial", "movement" => [0, 0]];
+        $validated = $request->validated();
 
-        return $movements; */
-        
-        $validated = $this->validateData($request);
-
-        $initial = $validated['initial'];
-
-        $items = $validated['items'];
-
-        //dump("Initial -> " . $initial[0] . ":" . $initial[1]);
-
-        $movements[0] = ["type" => "Initial", "movement" => [$initial[0], $initial[1]]];
-
-        foreach ($items as $item) {
-
-            if ($item == "Down") {
-                if ($initial[0] < 2) {
-                    $movements[] =  ["type" => $item, "movement" => [$initial[0] += 1, $initial[1]]];
-                } elseif ($initial[0] == 2) {
-                    $movements[] = ["type" => $item, "movement" => [$initial[0], $initial[1]]];
-                }
-            }
-
-            if ($item == "Up") {
-                if ($initial[0] > 0) {
-                    $movements[] =  ["type" =>  $item, "movement" => [$initial[0] -= 1, $initial[1]]];
-                } elseif ($initial[0] == 0) {
-                    $movements[] = ["type" =>  $item, "movement" => [$initial[0], $initial[1]]];
-                }
-            }
-
-            if ($item == "Rigth") {
-                if ($initial[1] < 2) {
-                    $movements[] =  ["type" =>  $item, "movement" => [$initial[0], $initial[1] += 1]];
-                } elseif ($initial[1] == 2) {
-                    $movements[] =  ["type" =>  $item, "movement" => [$initial[0], $initial[1]]];
-                }
-            }
-
-            if ($item == "Left") {
-                if ($initial[1] > 0) {
-                    $movements[] =  ["type" =>  $item, "movement" => [$initial[0], $initial[1] -= 1]];
-                } elseif ($initial[1] == 0) {
-                    $movements[] =  ["type" =>  $item, "movement" => [$initial[0], $initial[1]]];
-                }
-            }
-        }
-
-        /* foreach ($movements as $movement) {
-            dump($movement['type'] . " -> " . $movement['movement'][0] . ":" . $movement['movement'][1]);
-        } */
-
-        //return ($movements);
+        $movements = $this->getProcesedMovements($validated);
 
         return $this->returnSuccess($movements);
     }
 
-    private function validateData(Request $request)
+    private function getProcesedMovements($validated)
     {
-        return  $request->validate([
-            'initial' => [
-                'required',
-                'array',
-                Rule::in([0, 1, 2]),
-            ],
-            'items' => [
-                'required',
-                'array',
-                Rule::in($this->getMovements()),
-            ],
-        ]);
-    }
-
-    private function getMovements()
-    {
-        return  array("Down", "Rigth", "Left", "Up");
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
+        return  array_map(function ($item) {
+            return ["type" => $item, "movement" => match ($item) {
+                "Down" => $this->initial[0] == 2 ? $this->initial : [$this->initial[0] += 1, $this->initial[1]],
+                "Up" => $this->initial[0] == 0 ? $this->initial : [$this->initial[0] -= 1, $this->initial[1]],
+                "Rigth" => $this->initial[1] == 2 ? $this->initial : [$this->initial[0], $this->initial[1] += 1],
+                "Left" => $this->initial[1] == 0 ?  $this->initial : [$this->initial[0], $this->initial[1] -= 1]
+            }];
+        }, $validated['items']);
+    }    
 }

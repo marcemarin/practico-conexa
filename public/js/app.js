@@ -24742,8 +24742,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
-/* harmony import */ var _composables_movements__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../composables/movements */ "./resources/js/composables/movements.js");
+/* harmony import */ var _composables_movements__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../composables/movements */ "./resources/js/composables/movements.js");
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -24751,15 +24750,13 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
 
-
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   setup: function setup() {
-    var _useMovements = (0,_composables_movements__WEBPACK_IMPORTED_MODULE_2__["default"])(),
+    var _useMovements = (0,_composables_movements__WEBPACK_IMPORTED_MODULE_1__["default"])(),
         movements = _useMovements.movements,
         getMovements = _useMovements.getMovements,
         coordinates = _useMovements.coordinates,
-        getCoordinates = _useMovements.getCoordinates; //onMounted(getMovements);
-
+        getCoordinates = _useMovements.getCoordinates;
 
     var getMovementsFromEarth = /*#__PURE__*/function () {
       var _ref = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
@@ -25003,9 +25000,10 @@ function useMovements() {
 
             case 2:
               response = _context2.sent;
+              console.log(response.data);
               coordinates.value = response.data.data;
 
-            case 4:
+            case 5:
             case "end":
               return _context2.stop();
           }

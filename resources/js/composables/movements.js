@@ -15,7 +15,7 @@ export default function useMovements() {
     const getCoordinates = async (data) => {
 
         let response = await axios.post("/api/final-position", { initial: [0, 0], items: data })
-
+        console.log(response.data)
         coordinates.value = response.data.data;
 
    }
