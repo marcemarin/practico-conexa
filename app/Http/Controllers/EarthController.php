@@ -8,12 +8,6 @@ use Illuminate\Http\Request;
 
 class EarthController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-
     protected $initial;
 
     public function __construct(Request $request)
@@ -55,5 +49,5 @@ class EarthController extends Controller
                 "Left" => $this->initial[1] == 0 ?  $this->initial : [$this->initial[0], $this->initial[1] -= 1]
             }];
         }, $validated['items']);
-    }    
+    }
 }
