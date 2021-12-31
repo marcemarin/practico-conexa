@@ -2,22 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\EarthHelper;
 use App\Http\Requests\EarthRequest;
 use App\Services\EarthService;
 use Illuminate\Http\Request;
 
 class EarthController extends Controller
 {
-    protected $initial;
-
-    public function __construct(Request $request)
-    {
-        $this->initial = $request->initial;
-    }
-
     public function earth()
     {
-        $movements = EarthService::getMovements();
+        $movements = EarthHelper::getMovements();
 
         $randomMovements = [];
 
@@ -34,12 +28,14 @@ class EarthController extends Controller
     {
         $validated = $request->validated();
 
-        $movements = $this->getProcesedMovements($validated);
+        $earthService = new EarthService($validated['initial']);
+
+        $movements = $earthService->getProcesedMovements($validated);
 
         return $this->returnSuccess($movements);
     }
 
-    private function getProcesedMovements($validated)
+    /* private function getProcesedMovements($validated)
     {
         return  array_map(function ($item) {
             return ["type" => $item, "movement" => match ($item) {
@@ -49,5 +45,5 @@ class EarthController extends Controller
                 "Left" => $this->initial[1] == 0 ?  $this->initial : [$this->initial[0], $this->initial[1] -= 1]
             }];
         }, $validated['items']);
-    }
+    } */
 }

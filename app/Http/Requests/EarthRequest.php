@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Helpers\EarthHelper;
 use App\Services\EarthService;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
@@ -34,7 +35,7 @@ class EarthRequest extends FormRequest
             'items' => [
                 'required',
                 'array',
-                Rule::in(EarthService::getMovements()),
+                Rule::in(EarthHelper::getMovements()),
             ],
         ];
     }
