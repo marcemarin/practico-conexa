@@ -17,6 +17,11 @@ Go to the project directory
 ```bash
   cd practico-conexa
 ```
+Go to development branch 
+
+```bash
+  git checkout development
+```
 
 Start containers and install dependencies
 
@@ -34,6 +39,13 @@ Start the server
 ```bash
   ./vendor/bin/sail up
 ```
+Inside the container
+
+```bash
+  npm install && npm run dev 
+```
+Go to the browser
+[Conexa](http://localhost/)
 
 
 ## API Reference
@@ -65,4 +77,9 @@ Start the server
 ## Appendix
 
 Ask for environment variables
+
+
+## Documentation
+
+[Documentation](https://linktodocumentation)
 
